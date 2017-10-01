@@ -121,6 +121,10 @@ class ScrollBlot extends ContainerBlot {
     // TODO use WeakMap
     mutations.map(function(mutation: MutationRecord) {
       let blot = Registry.find(mutation.target, true);
+      let customParentBlot: any = Registry.find(mutation.target.parentNode, true);
+      if (customParentBlot && customParentBlot.custom_update) {
+          customParentBlot.custom_update(mutations);
+      };
       if (blot == null) return;
       if (blot.domNode[Registry.DATA_KEY].mutations == null) {
         blot.domNode[Registry.DATA_KEY].mutations = [mutation];
